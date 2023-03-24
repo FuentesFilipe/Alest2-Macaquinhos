@@ -46,9 +46,10 @@ public class Simulador {
             // loop para iterar sob a lista de macacos
             for (int j = 0; j < numMacacos; j++) {
                 Macaquinho auxMacaco = macacos.get(j);
+                ArrayList<Integer> auxCocos = new ArrayList<>(auxMacaco.getCocos());
                 // loop para iterar sobre cada coco
-                for (int k = 0; k < auxMacaco.getNumCocos(); k++) {
-                    auxMacaco.enviarCoco(auxMacaco.getCocos().get(k), macacos);
+                for (int coco : auxCocos) {
+                    auxMacaco.enviarCoco(coco, macacos);
                 }
             }
         } // FINAL DO JOGO

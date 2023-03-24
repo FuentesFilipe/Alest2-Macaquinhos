@@ -1,44 +1,46 @@
-import java.util.List;
-
 public class Macaquinho {
-    private int id;
     private int par;
     private int impar;
-    private List<Integer> cocos;
+    private int pares;
+    private int impares;
 
-    public Macaquinho(int id, int par, int impar, List<Integer> cocos) {
-        this.id = id;
+    public Macaquinho(int par, int impar, int pares, int impares) {
         this.par = par;
         this.impar = impar;
-        this.cocos = cocos;
+        this.pares = pares;
+        this.impares = impares;
     }
 
-    public void enviarCoco(int coco, List<Macaquinho> macaquinhos) {
-
-        this.cocos.remove(cocos.indexOf(coco));
-
-        int destino;
-        if (coco % 2 == 0) {
-            destino = par;
-        } else {
-            destino = impar;
-        }
-        macaquinhos.get(destino).receberCoco(coco);
+    public int getNumCocos() {
+        return pares + impares;
     }
 
-    public void receberCoco(int coco) {
-        cocos.add(coco);
+    public int getPar() {
+        return par;
     }
 
-    public int getId() {
-        return id;
+    public int getImpar() {
+        return impar;
     }
 
-    public List<Integer> getCocos() {
-        return cocos;
+    public int getPares() {
+        return pares;
     }
 
-    public Integer getNumCocos() {
-        return this.getCocos().size();
+    public int getImpares() {
+        return impares;
+    }
+
+    public void incrementPares(int pares) {
+        this.pares += pares;
+    }
+
+    public void incrementImpares(int impares) {
+        this.impares += impares;
+    }
+
+    public void resetCocos() {
+        this.pares = 0;
+        this.impares = 0;
     }
 }

@@ -16,48 +16,57 @@ public class Simulador {
         for (String line : lines) { // INICIO DO ARQUIVO
             String[] words = line.split(" ");
             if (line.startsWith("Macaco")) {
-                // pega o Id do macaco da linha
-                int id = Integer.parseInt(words[1]);
-
                 // pega os Id dos macacos que irão receber cocos em caso de par ou impar nas pedrinhas
                 int par = Integer.parseInt(words[4]);
                 int impar = Integer.parseInt(words[7]);
 
-                // inicializa a lista de cocos de cada macaco
-                ArrayList<Integer> cocos = new ArrayList<>();
+                int pares = 0;
+                int impares = 0;
 
-                // pega os valores das pedrinhas em cada coco
+                // soma quantos cocos o macaco da linha atual tem que
+                // mandar para cada remetente, tanto par quanto impar
                 for (int i = 11; i < words.length; i++) {
-                    cocos.add(Integer.parseInt(words[i]));
+                    int aux = Integer.parseInt(words[i]);
+                    if ((aux^1) == aux+1)
+                        pares++;
+                    else impares++;
                 }
 
                 // inicializa o macaco da linha com as informações obtidas
-                Macaquinho macaco = new Macaquinho(id, par, impar, cocos);
+                Macaquinho macaco = new Macaquinho(par, impar, pares, impares);
                 macacos.add(macaco);
             } else {
                 // pega o numero de rodadas da primeira linha
                 numRodadas = Integer.parseInt(words[1]);
             }
         }// FINAL DO ARQUIVO
-        int numMacacos = macacos.size();
-
+        
         // INICIO JOGO
         for (int i = 0; i < numRodadas; i++) {
-            // loop para iterar sob a lista de macacos
-            for (int j = 0; j < numMacacos; j++) {
-                Macaquinho auxMacaco = macacos.get(j);
-                ArrayList<Integer> auxCocos = new ArrayList<>(auxMacaco.getCocos());
-                // loop para iterar sobre cada coco
-                for (int coco : auxCocos) {
-                    auxMacaco.enviarCoco(coco, macacos);
-                }
+            for (Macaquinho macaco:
+                 macacos) {
+                // guarda em variaveis auxiliares quantos cocos o macaco precisa mandar,
+                // tanto para o seu remetente par e impar
+                int auxPares = macaco.getPares();
+                int auxImpares = macaco.getImpares();
+
+                // reseta os cocos do macaco para ele receber os sesu depois certinho
+                macaco.resetCocos();
+
+                // pegar o index dos remetentes deste macaco
+                int auxIndexPar = macaco.getPar();
+                int auxIndexImpar = macaco.getImpar();
+
+                // manda todos os cocos necessários de uma vez para o remetente par e o remetente impar
+                macacos.get(auxIndexPar).incrementPares(auxPares);
+                macacos.get(auxIndexImpar).incrementImpares(auxImpares);
             }
         } // FINAL DO JOGO
 
         System.out.printf("Resultado dos Macacos após %d rodadas: \n", numRodadas);
         for (Macaquinho macaco:
              macacos) {
-            System.out.println(macaco.getCocos());
+            System.out.println(macaco.getPares() + macaco.getImpares());
         }
     }
 }

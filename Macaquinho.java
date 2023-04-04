@@ -1,15 +1,19 @@
 public class Macaquinho {
+    private int id;
     private int par;
     private int impar;
     private int pares;
     private int impares;
 
-    public Macaquinho(int par, int impar, int pares, int impares) {
+    public Macaquinho(int id, int par, int impar, int pares, int impares) {
+        this.id = id;
         this.par = par;
         this.impar = impar;
         this.pares = pares;
         this.impares = impares;
     }
+
+    public int getId() { return id; }
 
     public int getNumCocos() {
         return pares + impares;

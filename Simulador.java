@@ -8,7 +8,7 @@ import java.util.List;
 public class Simulador {
     public static void main(String[] args) throws IOException {
         // Reading the file with readAllLines()
-        List<String> lines = Files.readAllLines(Paths.get("src/rodadas.txt"));
+        List<String> lines = Files.readAllLines(Paths.get("rodadas.txt"));
 
 
         int numRodadas = 0;
@@ -17,6 +17,7 @@ public class Simulador {
             String[] words = line.split(" ");
             if (line.startsWith("Macaco")) {
                 // pega os Id dos macacos que irão receber cocos em caso de par ou impar nas pedrinhas
+                int id = Integer.parseInt(words[1]);
                 int par = Integer.parseInt(words[4]);
                 int impar = Integer.parseInt(words[7]);
 
@@ -33,7 +34,7 @@ public class Simulador {
                 }
 
                 // inicializa o macaco da linha com as informações obtidas
-                Macaquinho macaco = new Macaquinho(par, impar, pares, impares);
+                Macaquinho macaco = new Macaquinho(id, par, impar, pares, impares);
                 macacos.add(macaco);
             } else {
                 // pega o numero de rodadas da primeira linha
@@ -63,10 +64,24 @@ public class Simulador {
             }
         } // FINAL DO JOGO
 
+        // loop para armazenar o macaco com maior numero de cocos
         System.out.printf("Resultado dos Macacos após %d rodadas: \n", numRodadas);
+        int max = 0;
         for (Macaquinho macaco:
              macacos) {
-            System.out.println(macaco.getPares() + macaco.getImpares());
+            int aux = macaco.getNumCocos();
+            System.out.printf("MACACO %d: %d\n", macaco.getId(), aux);
+            if (aux > max) {
+                max = aux;
+            }
+        }
+
+        // loop para pegar o macaco com maior numero de cocos
+        for (Macaquinho macaco : macacos) {
+            int aux = macaco.getNumCocos();
+            if (aux == max) {
+                System.out.printf("Macaco vencedor é o de ID = %d, com %d cocos.\n", macaco.getId(), aux);
+            }
         }
     }
 }

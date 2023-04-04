@@ -8,7 +8,7 @@ import java.util.List;
 public class Simulador {
     public static void main(String[] args) throws IOException {
         // Reading the file with readAllLines()
-        List<String> lines = Files.readAllLines(Paths.get("rodadas.txt"));
+        List<String> lines = Files.readAllLines(Paths.get("Testes/1000monkas.txt"));
 
 
         int numRodadas = 0;
